@@ -1,0 +1,37 @@
+Type: Compendium
+Package: PSA001_subset
+Title: Exploratory Subset of the Data for PSA001
+Version: 0.0.1
+Authors@R: 
+    person(given = "Lisa",
+           family = "DeBruine",
+           role = c("aut", "cre"),
+           email = "Lisa.DeBruine@glasgow.ac.uk",
+           comment = c(ORCID = "0000-0002-7523-5539"))
+    person(given = "Benedict",
+           family = "Jones",
+           role = c("aut"),
+           email = "Ben.Jones@glasgow.ac.uk",
+           comment = c(ORCID = "0000-0001-7777-0220"))
+    person(given = "Jessica Kay",
+           family = "Flake",
+           role = c("aut"),
+           email = "kayflake@gmail.com",
+           comment = c(ORCID = "0000-0002-3498-615X"))
+Description: Exploratory subset of the data for PSA001 project of the Psychological Science Accelerator
+License: CCBY-4.0
+Depends: 
+    dplyr,
+    GPArotation,
+    holepunch,
+    kableExtra,
+    knitr,
+    paran,
+    psych,
+    readxl,
+    rmarkdown,
+    tidyverse
+Remotes: 
+    karthik/holepunch
+Encoding: UTF-8
+LazyData: true
