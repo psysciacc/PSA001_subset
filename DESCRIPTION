@@ -7,12 +7,12 @@ Authors@R:
            family = "DeBruine",
            role = c("aut", "cre"),
            email = "Lisa.DeBruine@glasgow.ac.uk",
-           comment = c(ORCID = "0000-0002-7523-5539"))
+           comment = c(ORCID = "0000-0002-7523-5539")),
     person(given = "Benedict",
            family = "Jones",
            role = c("aut"),
            email = "Ben.Jones@glasgow.ac.uk",
-           comment = c(ORCID = "0000-0001-7777-0220"))
+           comment = c(ORCID = "0000-0001-7777-0220")),
     person(given = "Jessica Kay",
            family = "Flake",
            role = c("aut"),
