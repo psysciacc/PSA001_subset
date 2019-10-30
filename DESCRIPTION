@@ -1,8 +1,8 @@
 Type: Compendium
-Package: PSA001_subset
+Package: PSA001subset
 Title: Exploratory Subset of the Data for PSA001
 Version: 0.0.1
-Authors@R: 
+Authors@R: c(
     person(given = "Lisa",
            family = "DeBruine",
            role = c("aut", "cre"),
@@ -17,7 +17,7 @@ Authors@R:
            family = "Flake",
            role = c("aut"),
            email = "kayflake@gmail.com",
-           comment = c(ORCID = "0000-0002-3498-615X"))
+           comment = c(ORCID = "0000-0002-3498-615X")))
 Description: Exploratory subset of the data for PSA001 project of the Psychological Science Accelerator
 License: CCBY-4.0
 Depends: 
