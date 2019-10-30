@@ -313,7 +313,7 @@ data <- ratings %>%
   summarise(rating = mean(rating)) %>% # average ratings across 2 
   ungroup()
 
-write_csv(data, "data/psa001_ind.csv")
+write_csv(data, "data/psa001_ind_subset.csv")
 
 ```
 
@@ -490,6 +490,8 @@ data_agg <- data %>%
   summarise(rating = mean(rating)) %>%
   ungroup() %>%
   spread(trait, rating)
+
+write_csv(data_agg, "data/psa001_agg_subset.csv")
 
 ```
 
