@@ -19,6 +19,8 @@ library(GPArotation) # for robustness checks
 library(kableExtra) # for nice tables
 library(tidyverse) # for data cleaning
 
+# create directory for saving figures
+if (!dir.exists("figures")) { dir.create("figures") }
 
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(echo = TRUE, 
@@ -36,12 +38,40 @@ See https://osf.io/87rbg/ for Stage 1 RR code. The code below is modified from t
 
 ## Load Study Data (SUBSET)
 
-Load study data and demographic questionnaires from the data folder.
+Subset the data (this won't run unless you have the original full data).
 
-```{r data-load, eval = FALSE}
+```{r subset-data, eval = FALSE}
+
 session <- read_csv("data/session.csv")
 dat_quest <- read_csv("data/quest_data.csv")
 dat_exp <- read_csv("data/exp_data.csv")
+
+session_subset <- session %>%
+  filter(user_status %in% c("guest", "registered")) %>%
+  group_by(proj_name) %>%
+  sample_frac(1/3) %>%
+  ungroup() %>%
+  pull(session_id)
+
+session %>%
+  filter(session_id %in% session_subset) %>%
+  write_csv("data/session_subset.csv")
+
+dat_exp %>%
+  filter(session_id %in% session_subset) %>%
+  write_csv("data/exp_data_subset.csv")
+
+dat_quest %>%
+  filter(session_id %in% session_subset) %>%
+  write_csv("data/quest_data_subset.csv")
+```
+
+Load study data and demographic questionnaires from the data folder.
+
+```{r data-load}
+session <- read_csv("data/session_subset.csv")
+dat_quest <- read_csv("data/quest_data_subset.csv")
+dat_exp <- read_csv("data/exp_data_subset.csv")
 
 # reshape questionnaire data to make wide
 quest <- dat_quest %>%
@@ -53,15 +83,13 @@ quest <- dat_quest %>%
   spread(q_name, dv, convert = TRUE)
 ```
 
+
 Join experiment and questionnaire data
 
-```{r exp-quest-join, eval = FALSE}
-ratings_raw <- session %>%
-  filter(user_status %in% c("guest", "registered")) %>%
-  group_by(proj_name) %>%
-  sample_frac(1/3) %>%
-  ungroup() %>%
-  left_join(dat_exp, by = c("user_id", "session_id")) %>%
+```{r exp-quest-join}
+
+ratings_raw <-  dat_exp %>%
+  left_join(session, by = c("user_id", "session_id")) %>%
   filter(user_status %in% c("guest", "registered")) %>%
   separate(exp_name, c("psa", "language", "trait", "block"), 
            sep = "_") %>%
@@ -96,17 +124,6 @@ ratings_raw <- session %>%
 write_csv(ratings_raw, "data/ratings_raw_subset.csv")
 
 ```
-
-Load subset of 1/3 of data from each lab.
-
-```{r data-load-subset}
-
-ratings_raw <- read_csv("data/ratings_raw_subset.csv")
-
-```
-
-
-
 
 ## Load Auxillary Data
 
@@ -392,7 +409,7 @@ First, we will calculate the average rating for each face separately for each of
 
 ### Calculate Alphas
 
-```{r calc-alphas, eval = TRUE}
+```{r calc-alphas, eval = FALSE}
 
 # takes a long time, so saves the results and loads from a file in the next chunk if set to eval = FALSE
 data_alpha <- data %>%
